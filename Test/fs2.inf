@@ -1,0 +1,69 @@
+; FS2 Install Information
+
+[version]
+Signature = "$WINDOWS NT$"
+Class = HIDClass
+ClassGUID = {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Provider = %PROVIDER%
+DriverVer = 04/24/2019, 1.1.6
+CatalogFile=  fs2.cat
+
+[Manufacturer]
+Hori = HoriFS2, NTamd64
+ 
+[HoriFS2.NTamd64]
+%USB_NAME%=     HoriFS2.Install.NTamd64,    USB\%HoriFS2.fs2.VID.PID%
+
+[SourceDisksNames]
+1 = %DISKNAME%,,,.
+
+[SourceDisksFiles]
+fs2.sys = 1
+;fs2cpl.dll = 1
+;profileldr.exe = 1
+
+[DestinationDirs]
+HoriFS2.Files.Driver.NTamd64 = 12
+HoriFS2.Files.Ctrl.NTamd64 = 11
+
+[HoriFS2.Install.NTamd64]
+CopyFiles = HoriFS2.Files.Driver.NTamd64, HoriFS2.Files.Ctrl.NTamd64
+AddReg = HoriFS2.AddReg.Ctrl
+
+[HoriFS2.Files.Driver.NTamd64]
+fs2.sys,,,2
+
+;[HoriFS2.Files.Ctrl.NTamd64]
+;fs2cpl.dll
+
+
+;[HoriFS2.AddReg.Ctrl]
+;HKCR,CLSID\%HoriFS2.Ctrl.CLSID%,,,%HoriFS2.Ctrl.Name%
+;HKCR,CLSID\%HoriFS2.Ctrl.CLSID%\InprocServer32,,,"%11%\fs2cpl.dll"
+;HKCR,CLSID\%HoriFS2.Ctrl.CLSID%\InprocServer32,ThreadingModel,,"Apartment"
+
+;HKLM,%PropOEMKey%\%HoriFS2.fs2.VID.PID%,ConfigCLSID,0,%HoriFS2.Ctrl.CLSID%
+
+[HoriFS2.Install.NTamd64.Services]
+AddService = HoriFS2, 0x00000002, HoriFS2.Service
+
+[HoriFS2.Service]
+DisplayName    = %HoriFS2.Service.Name%
+ServiceType    = 1 ; SERVICE_KERNEL_DRIVER
+StartType      = 3 ; SERVICE_DEMAND_START
+ErrorControl   = 1 ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\fs2.sys
+
+
+[Strings]
+PROVIDER=      "SaberShip"
+USB_NAME    = "FlightStick 2"
+DEV_NAME	= "Hori FlightStick 2 Joystick"
+GUID_CPL    = "{D4B5469E-51C6-4A5E-93D5-C151ECED0FE1}"
+DISKNAME=      "Flight Stick 2 Driver"
+HoriFS2.fs2 = "FlightStick 2"
+HoriFS2.Service.Name = "FlightStick 2"
+HoriFS2.Ctrl.Name = "Control Panel for FlightStick 2"
+HoriFS2.Ctrl.CLSID = "{5DF67258-72A2-4877-ADA1-18A64BE07E55}"
+PropOEMKey = "System\CurrentControlSet\Control\MediaProperties\PrivateProperties\Joystick\OEM"
+HoriFS2.fs2.VID.PID = "VID_06D3&PID_0F10"

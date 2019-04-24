@@ -8,6 +8,7 @@ FS2CPL/x64/
 **/ipch/
 **/Debug/
 **/Release/
+**.vs
 
 *.suo
 *.sdf
