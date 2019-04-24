@@ -1,0 +1,3 @@
+LIBRARY hidclass.sys
+EXPORTS
+HidRegisterMinidriver@4

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{04f2a426-c03d-4f60-91d7-75c3355075a4}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{fc901ae9-f853-4c13-b776-64f32d9e4281}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{783c79dd-8eea-4f52-a568-10eadf4859a5}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="event.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="hid.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ioctl.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="pnp.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="setting.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="usb.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hid_port.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="report_data.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="usbd_lib.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

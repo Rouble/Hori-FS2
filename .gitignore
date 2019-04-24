@@ -1,0 +1,17 @@
+FS2/x64/
+FS2/Debug/
+FS2/Release/
+FS2/ipch/
+FS2CPL/Release/
+FS2CPL/x64/
+**/x64/
+**/ipch/
+**/Debug/
+**/Release/
+
+*.suo
+*.sdf
+*.obj
+*.tlog
+*.pdb
+*.cache

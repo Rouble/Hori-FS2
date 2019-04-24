@@ -1,0 +1,4 @@
+LIBRARY usbd.sys
+EXPORTS
+USBD_ParseConfigurationDescriptorEx@28
+USBD_CreateConfigurationRequestEx@8
