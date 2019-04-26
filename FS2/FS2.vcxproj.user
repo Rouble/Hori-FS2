@@ -1,3 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <SignMode>TestSign</SignMode>
+    <TestCertificate>CN="WDKTestCert aelki,132007087765600070" | 081FB3194927B825D2276A218B6CDC76E549CF8B</TestCertificate>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <SignMode>TestSign</SignMode>
+    <TestCertificate>CN="WDKTestCert aelki,132007091016606006" | 374D12F28DF10542397811B7D66D3743825654C1</TestCertificate>
+    <DbgengKernelMachineName>New Computer</DbgengKernelMachineName>
+  </PropertyGroup>
 </Project>

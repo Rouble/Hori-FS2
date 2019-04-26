@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B1BBA7F4-D83F-4ECC-BFB6-BCD8822D8A6C}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -33,10 +33,11 @@
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <SpectreMitigation>Spectre</SpectreMitigation>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -61,11 +62,13 @@
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
     <TargetExt>.sys</TargetExt>
+    <CustomBuildBeforeTargets>Inf2Cat</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
     <TargetExt>.sys</TargetExt>
+    <CustomBuildBeforeTargets>Inf2Cat</CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -158,6 +161,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <CallingConvention>StdCall</CallingConvention>
       <Optimization>Disabled</Optimization>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)\$(ProjectName).sys</OutputFile>
@@ -165,8 +169,8 @@
       </RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <AdditionalDependencies>ntoskrnl.lib;hal.lib;ntstrsafe.lib;hidclass.lib;ksecdd.lib;usbd.lib;classpnp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(WDKPATH)\lib\WIN7\amd64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ntoskrnl.lib;hal.lib;ntstrsafe.lib;hidclass.lib;ksecdd.lib;usbd.lib;classpnp.lib;bufferoverflowK.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.18362.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <SubSystem>Native</SubSystem>
       <Driver>Driver</Driver>
@@ -174,10 +178,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetDir)$(ProjectName).sys" $(SolutionDir)..\Test\$(ProjectName).sys
-"C:\Program Files (x86)\Windows Kits\10\bin\x86\Inf2Cat.exe" /driver:$(SolutionDir)..\Test /os:10_x64
-C:\WinDDK\7600.16385.1\bin\x86\SignTool.exe sign /v /s PrivateCertStore /n FS2.com(Test) /t http://timestamp.verisign.com/scripts/timstamp.dll $(SolutionDir)..\Test\FS2.cat</Command>
+      <Command>copy /Y "$(TargetDir)$(ProjectName)" $(SolutionDir)..\Test</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy /Y "$(TargetDir)$(ProjectName).sys" $(targetDir)$(projectname)\$(ProjectName).sys</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(targetDir)$(projectname)\$(ProjectName).sys</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -218,10 +226,15 @@ C:\WinDDK\7600.16385.1\bin\x86\SignTool.exe sign /v /s PrivateCertStore /n FS2.c
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetDir)$(ProjectName).sys" $(SolutionDir)..\Test\$(ProjectName).sys
-"C:\Program Files (x86)\Windows Kits\10\bin\x86\Inf2Cat.exe" /driver:$(SolutionDir)..\Test /os:10_x64
-C:\WinDDK\7600.16385.1\bin\x86\SignTool.exe sign /v /s PrivateCertStore /n FS2.com(Test) /t http://timestamp.verisign.com/scripts/timstamp.dll $(SolutionDir)..\Test\FS2.cat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy /Y "$(TargetDir)$(ProjectName).sys" $(targetDir)$(projectname)\$(ProjectName).sys</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(targetDir)$(projectname)\$(ProjectName).sys;%(Outputs)</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="event.c" />
@@ -238,6 +251,9 @@ C:\WinDDK\7600.16385.1\bin\x86\SignTool.exe sign /v /s PrivateCertStore /n FS2.c
     <ClInclude Include="report_data.h" />
     <ClInclude Include="usbd_lib.h" />
     <ClInclude Include="util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="fs2.inf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
